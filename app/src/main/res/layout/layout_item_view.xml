@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#201F24">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/contactLogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            tools:src="@drawable/percy"
+            android:scaleType="fitCenter"
+           android:padding="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contactName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                tools:text="Percy"
+                android:textColor="#ffffff"
+                />
+
+            <TextView
+                android:id="@+id/contactPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                tools:text="08155676415"
+                android:textColor="#FFFFFF"
+                />
+
+        </LinearLayout>
+
+
+        </LinearLayout>
+
+</LinearLayout>
