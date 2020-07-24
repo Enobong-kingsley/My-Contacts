@@ -1,11 +1,16 @@
 package com.example.mycontacts
 
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.widget.SearchView
+
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,26 +21,50 @@ class MainActivity : AppCompatActivity(), OnContactClickedListener {
 
     lateinit var binding : ActivityMainBinding
     lateinit var contactList: ArrayList<Contact>
-    lateinit var DisplayList:ArrayList<Contact>
+   // lateinit var DisplayList:ArrayList<Contact>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         // instance
         contactList = ArrayList()
-        addContact()
+       addContact()
 
         contactRecyclerview.layoutManager = LinearLayoutManager(this)
         contactRecyclerview.addItemDecoration(DividerItemDecoration(this,1))
-        contactRecyclerview.adapter = ContactAdapter(contactList, this )
-        contactRecyclerview.adapter = ContactAdapter(DisplayList, this)
+       contactRecyclerview.adapter = ContactAdapter(contactList, this )
+       // contactRecyclerview.adapter = ContactAdapter(DisplayList, this)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//
-//        menuInflater.inflate(R.menu.my_menu,menu)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.my_menu,menu)
+        val searchManager =getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchItem = menu?.findItem(R.id.menu_search)?.actionView
+        val searchView = searchItem as SearchView
+
+       // searchView.setSearchableInfo(searchManager.getSearchableInfo(ComponentName()))
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                searchView.setQuery("",false)
+               // searchView.cl()
+                Toast.makeText(this@MainActivity,"searching $query",Toast.LENGTH_LONG).show()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Toast.makeText(this@MainActivity,"Finding $newText",Toast.LENGTH_LONG).show()
+                return false
+            }
+
+        })
+        return true
+    }
+
+    
 //        var search_item = menu?.findItem(R.id.menu_search)
 //        if (search_item != null){
-//            val searchView = search_item as SearchView
+//
 //
 //            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
 //
@@ -69,8 +98,7 @@ class MainActivity : AppCompatActivity(), OnContactClickedListener {
 //
 //            })
 //        }
-      //  return super.onCreateOptionsMenu(menu)
-    //}
+
     fun addContact(){
         contactList.add(Contact("Percy","08155676415",R.drawable.percy))
         contactList.add(Contact("Kingsley","0815487415",R.drawable.pking))
